@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='us-ascii'?>
+<listaClientes>
+
+    <cliente>
+        <nombre nit="1506">Harry</nombre>
+        <direccionF>34 Av "B" 27-68 Zona7</direccionF>
+        <usuario>Harry412Zar</usuario>
+        <clave>4KV6TZGJ3A</clave>
+    </cliente>
+
+    <cliente>
+        <nombre nit="2021">Lexy</nombre>
+        <direccionF>La reforma</direccionF>
+        <usuario>Lexy208TZ</usuario>
+        <clave>DAGWEZD32I</clave>
+    </cliente>
+</listaClientes>
