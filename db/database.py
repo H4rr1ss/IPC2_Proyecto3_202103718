@@ -88,8 +88,8 @@ class Database():
         es la correcta para tener acceso a la manipulación de instancias\n\n
 
         Posibles retornos:\n
-        True: ~No encontró al usuario en la base de datos o ~\n
-        False: ~No encontró ninguna coincidencia, se creará el cliente con éxito~
+        True: ~Si se encuentra el usuario en la base de datos~\n
+        False: ~No se encontró al usuario en la base de datos~
         '''
         condition = self.__searchUser(user, password)
 
@@ -97,7 +97,6 @@ class Database():
             return True
 
         return False
-
 # ------------------------------------------------------------------------------------
 
 DB = Database()

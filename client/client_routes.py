@@ -1,4 +1,3 @@
-from audioop import add
 from flask import Blueprint, jsonify, request
 from db.database import DB
 
@@ -24,6 +23,9 @@ def createClient():
     return jsonify({'msg': 'Se creo el cliente con exito!'})
 
 
+#---------------------------------
+# LUEGO DE VERIFICAR QUE EL USUARIO SI EXISTE EN EL SISTEMA
+# DEBERÁ REDIRIGIR A OTRA PESTAÑA PARA SELECCIONAR SUS INSTANCIAS
 @client.route('/client/login', methods=['POST'])
 def userValidation():
     body = request.get_json()
@@ -35,3 +37,8 @@ def userValidation():
         return jsonify({'msg': 'Bienvenido'})#Si se encuentra en la base de datos
 
     return jsonify({'msg': 'no existe.'})#Este usuario no existe.
+
+
+
+# FALTA ARREGLAR LA SALIDA DE LOS JSON PERO PORQUE NO HE PUESTO LABELS EN EL HTML PARA QUE SE IMPRIMAN ALLÍ 
+# ENTONCES POR ESO NO ESTAN ASÍ MEDIO FEO EL TEXTO QUE RETORNA
