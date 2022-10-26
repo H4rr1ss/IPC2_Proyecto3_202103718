@@ -1,7 +1,0 @@
-<?xm version="1.0"?>
-<listadoConsumos>
-	<consumo nitCliente="$nit" idInstancia="$id">
-		<tiempo> tiempoConsumido </tiempo>
-		<fechaHora> $descripcionFechaHora </fechaHora>
-	</consumo>
-</listadoConsumos>
