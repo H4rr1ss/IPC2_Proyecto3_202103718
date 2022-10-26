@@ -1,44 +1,68 @@
 from flask import Blueprint, jsonify, request
 from db.database import DB
+from xml.etree import ElementTree as ET
+from .clases import Categoria, Recurso, Configuracion
+import json
+
+
+
 
 client = Blueprint('client', __name__)
 
-#---------------------------------
-# Actualmente los clientes se registran ingresando su 
-# NOMBRE
-# NIT
-# DIRECCION FISICA
-# EMAIL
-@client.route('/client/register', methods=['POST'])
-def createClient():
+@client.route('/client/configuracion', methods=['POST'])
+def rutaConfig():
     body = request.get_json()
-    
+
+    # -----RECURSOS-----
+    listRecursoJson = body['listRecursosJson']
+    listRecursos = json.loads(listRecursoJson)
+
+    # -----CATEGORIAS-----
+    listCategoriasJson = body['listCategoriasJSON']
+    listCategorias = json.loads(listCategoriasJson)
+
+    # ------CLIENTE------
     nit = body['nit']
-    name = body['name']
-    address = body['address']
-
-    if DB.createClient(name, nit, address) is True:
-        return jsonify({'msg': 'Cliente ya existente!'})
-
-    return jsonify({'msg': 'Se creo el cliente con exito!'})
-
-
-#---------------------------------
-# LUEGO DE VERIFICAR QUE EL USUARIO SI EXISTE EN EL SISTEMA
-# DEBERÁ REDIRIGIR A OTRA PESTAÑA PARA SELECCIONAR SUS INSTANCIAS
-@client.route('/client/login', methods=['POST'])
-def userValidation():
-    body = request.get_json()
-
+    nameCliente = body['nameCliente']
     user = body['user']
-    password = body['password']
+    clave = body['clave']
+    direccion = body['direccion']
+    correo = body['correo']
 
-    if DB.userValidation(user, password) is True:
-        return jsonify({'msg': 'Bienvenido'})#Si se encuentra en la base de datos
+    # ------INSTANCIA------
+    idInstancia = body['idInstancia']
+    idConfigInstancia = body['idConfigInstancia']
+    nameInstancia = body['nameInstancia']
+    fechaInicio = body['fechaInicio']
+    estado = body['estado']
+    fechaFinal = body['fechaFinal']
 
-    return jsonify({'msg': 'no existe.'})#Este usuario no existe.
+    print('\n')
+    for i in range(len(listRecursos)):
+        objRecurso = Recurso(**json.loads(listRecursos[i]))
+        print('-----LISTA DE RECURSOS-- >')
+        print('idRecurso: {} || nombreRecurso: {}\nabreviatura:{} || metrica: {}\ntipo: {} || valorXhora: {}\n'.format(objRecurso.id, objRecurso.name, objRecurso.abbreviation, objRecurso.metrics, objRecurso.type, objRecurso.price))
+    print('------------------------------------------------')
+
+    for j in range(len(listCategorias)):
+        objCategoria = Categoria(**json.loads(listCategorias[j]))
+        print('\n-----LISTA DE CATEGORIAS-- >')
+        print('idCategoria: {} || nombreCategoria: {}\ndescripcion: {} || cargaTrabajo: {}\n'.format(objCategoria.id, objCategoria.name, objCategoria.description, objCategoria.workload))
+        print('  -----LISTA CONFIGURACIONES')
+        listConfigCategoria = json.loads(objCategoria.listConfiguration)
+        for p in range(len(listConfigCategoria)):
+            objConfigCate = Configuracion(**json.loads(listConfigCategoria[p]))
+            print('  idConfig: {} || nombreConfig: {}\n  descripcionConfig: {} '.format(objConfigCate.id, objConfigCate.name, objConfigCate.description))
+
+    return jsonify({'nombre de recurso': 'objRecurso.getName()'})
 
 
-
-# FALTA ARREGLAR LA SALIDA DE LOS JSON PERO PORQUE NO HE PUESTO LABELS EN EL HTML PARA QUE SE IMPRIMAN ALLÍ 
-# ENTONCES POR ESO NO ESTAN ASÍ MEDIO FEO EL TEXTO QUE RETORNA
+@client.route('/client/consumo', methods=['POST'])
+def xmlConsumo():
+    body = request.get_json()
+    nit = body['nit']
+    idInstancia = body['idInstancia']
+    tiempo = body['tiempo']
+    fechaHora = body['fechaHora']
+    print(nit, idInstancia, tiempo, fechaHora)
+    return jsonify({'msg': 'xml de consumo correctamente cargado'})
