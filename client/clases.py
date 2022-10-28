@@ -51,3 +51,11 @@ class Cliente(object):
         self.address = address
         self.email = email
         self.listInstance = listInstance
+
+# -------------------------------------------------------------------------------------------------------------------------
+class Consumo(object):
+    def __init__(self, nitCliente, idInstancia, tiempo, fechaHora):
+        self.nitCliente = nitCliente
+        self.idInstancia = idInstancia
+        self.tiempo = tiempo
+        self.fechaHora = fechaHora
