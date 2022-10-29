@@ -24,21 +24,33 @@ def rutaConfig():
     listClientesJson = body['listaClientes']
     listCliente = json.loads(listClientesJson)
 
+    # CREAR DB DE LOS RECURSOS Y CATEGORIAS INGRESADAS CON ARCHIVO XML ---->
     data = {}
     data['recursos'] = []
     data['categorias'] = []
 
-    for i in range(len(listRecursos)):
-        objRecurso = listRecursos[i]
+    for a in range(len(listRecursos)):
+        objRecurso = listRecursos[a]
         print(json.loads(objRecurso))
         data['recursos'].append(json.loads(objRecurso))
 
-    for j in range(len(listCategorias)):
-        objCategoria = listCategorias[j]
+    for b in range(len(listCategorias)):
+        objCategoria = listCategorias[b]
         data['categorias'].append(json.loads(objCategoria))
     
-    with open('./db/ClientAndCategoria.json', 'w') as file:
+    with open('./db/recursosYcategorias.json', 'w') as file:
         json.dump(data, file, indent=4)
+
+    # CREAR DB DE LOS CLIENTES INGRESADAS CON ARCHIVO XML ---->
+    dataClients = {}
+    dataClients['clientes'] = []
+
+    for c in range(len(listCliente)):
+        objClient = listCliente[c]
+        dataClients['clientes'].append(json.loads(objClient))
+
+    with open('./db/clientes.json', 'w') as file:
+        json.dump(dataClients, file, indent=4)
 
 
     return jsonify({'nombre de recurso': 'objRecurso.getName()'})
@@ -61,7 +73,7 @@ def xmlConsumo():
     listConsumoJson = body['listConsumo']
     listConsumo = json.loads(listConsumoJson)
 
-
+    # CREAR DB DE LOS CONSUMOS INGRESADAS CON ARCHIVO XML ---->
     data = {}
     data['consumos'] = []
 
@@ -69,7 +81,6 @@ def xmlConsumo():
         objConsumo = listConsumo[i]
         print(json.loads(objConsumo))
         data['consumos'].append(json.loads(objConsumo))
-
 
     with open('./db/Consumos.json', 'w') as file:
         json.dump(data, file, indent=4)

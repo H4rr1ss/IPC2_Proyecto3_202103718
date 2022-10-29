@@ -1,6 +1,6 @@
 import xml.etree.ElementTree as ET
 
-tree = ET.parse('./db/users.xml')
+tree = ET.parse('./IGNORAR/hola.xml')
 root = tree.getroot()
 
 for products in root.findall('product'):
@@ -22,4 +22,4 @@ ET.SubElement(new, '{}'.format(h),nit='nit').text='{}'.format(pepe)
 ET.SubElement(new, 'address').text='textAddress'
 
 print(root.tag)
-tree.write('./db/users.xml', xml_declaration=True)
+tree.write('./IGNORAR/hola.xml', xml_declaration=True)

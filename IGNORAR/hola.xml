@@ -16,4 +16,4 @@
 		<hola nit="nit">textName</hola>
 		<address>textAddress</address>
 	</cliente>
-</root>
+<cliente><hola nit="nit">zw</hola><address>textAddress</address></cliente></root>
