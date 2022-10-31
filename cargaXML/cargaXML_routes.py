@@ -1,15 +1,12 @@
 from flask import Blueprint, jsonify, request
-from db.database import DB
-from xml.etree import ElementTree as ET
-from .clases import Categoria, Cliente, Instancia, Recurso, Configuracion, Consumo
 import json
 import re
 
 
-client = Blueprint('client', __name__)
+cargaXML = Blueprint('cargaXML', __name__)
 
 
-@client.route('/client/configuracion', methods=['POST'])
+@cargaXML.route('/cargaXML/configuracion', methods=['POST'])
 def rutaConfig():
     body = request.get_json()
 
@@ -69,7 +66,7 @@ def dateER(date):
     except:
         print('ocurrio un error')
 
-@client.route('/client/consumo', methods=['POST'])
+@cargaXML.route('/cargaXML/consumo', methods=['POST'])
 def xmlConsumo():
     body = request.get_json()
     # -------------Consumo-----------------
@@ -93,3 +90,4 @@ def xmlConsumo():
         json.dump(data, file, indent=4)
 
     return jsonify({'msg': 'xml de consumo correctamente cargado'})
+
