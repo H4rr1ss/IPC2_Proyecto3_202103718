@@ -1,0 +1,138 @@
+{
+    "recursos": [
+        {
+            "id": "1000",
+            "nombre": "Nucleo de unidad central de procesamiento",
+            "abreviatura": "CPU",
+            "metrica": "Ghz ",
+            "tipo": "Procesamiento",
+            "valorXhora": "0.02"
+        },
+        {
+            "id": "1001",
+            "nombre": "Memoria de Acceso Aleatorio",
+            "abreviatura": "RAM",
+            "metrica": "GB ",
+            "tipo": "Almacenamiento",
+            "valorXhora": "0.03"
+        },
+        {
+            "id": "1002",
+            "nombre": "Unidad de estado solido",
+            "abreviatura": "SSD",
+            "metrica": "GB",
+            "tipo": "Almacenamiento",
+            "valorXhora": "0.03"
+        },
+        {
+            "id": "1003",
+            "nombre": "Unidad de disco duro",
+            "abreviatura": "DD",
+            "metrica": "GB",
+            "tipo": "Almacenamiento",
+            "valorXhora": "0.01"
+        }
+    ],
+    "categorias": [
+        {
+            "id": "2000",
+            "nombre": "Small",
+            "descripcion": "Instancias para ejecucion de proyectos en consola",
+            "cargaTrabajo": "Minima",
+            "listaConfiguraciones": [
+                {
+                    "id": "201",
+                    "nombre": "Default ",
+                    "descripcion": "Configuracion por default",
+                    "listaRecursos": [
+                        {
+                            "id": "1000",
+                            "cantidad": " 2 "
+                        },
+                        {
+                            "id": "1001",
+                            "cantidad": " 1 "
+                        },
+                        {
+                            "id": "1003",
+                            "cantidad": " 5 "
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "2001",
+            "nombre": "Medium",
+            "descripcion": "Instancias para ejecucion de proyectos medios ",
+            "cargaTrabajo": "Medio",
+            "listaConfiguraciones": [
+                {
+                    "id": "211",
+                    "nombre": "Default ",
+                    "descripcion": "Configuracion por default",
+                    "listaRecursos": [
+                        {
+                            "id": "1000",
+                            "cantidad": " 2 "
+                        },
+                        {
+                            "id": "1001",
+                            "cantidad": " 4 "
+                        },
+                        {
+                            "id": "1002",
+                            "cantidad": " 50 "
+                        }
+                    ]
+                },
+                {
+                    "id": "212",
+                    "nombre": "Instancia web ",
+                    "descripcion": "Configuracion para una aplicacion web",
+                    "listaRecursos": [
+                        {
+                            "id": "1000",
+                            "cantidad": " 3 "
+                        },
+                        {
+                            "id": "1001",
+                            "cantidad": " 4 "
+                        },
+                        {
+                            "id": "1003",
+                            "cantidad": " 90 "
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "2002",
+            "nombre": "Large",
+            "descripcion": "Instancia potente para juegos",
+            "cargaTrabajo": "Maximo",
+            "listaConfiguraciones": [
+                {
+                    "id": "221",
+                    "nombre": "Default ",
+                    "descripcion": "Configuracion por default",
+                    "listaRecursos": [
+                        {
+                            "id": "1000",
+                            "cantidad": " 8 "
+                        },
+                        {
+                            "id": "1001",
+                            "cantidad": " 32 "
+                        },
+                        {
+                            "id": "1003",
+                            "cantidad": " 100 "
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

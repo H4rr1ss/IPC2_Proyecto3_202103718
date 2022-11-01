@@ -1,0 +1,40 @@
+{
+    "clientes": [
+        {
+            "nit": "3000",
+            "nombre": "Juan Pedro Gonzales",
+            "usuario": "JuanPe",
+            "clave": "MarmotaArbolNido",
+            "direccion": "10 calle 13-45 z 1",
+            "correoElectronico": "jaunpems@gosth.com",
+            "listaInstancias": [
+                {
+                    "id": "31",
+                    "idConfig": "201",
+                    "nombre": "GhostDev1",
+                    "fechaInicio": "10/06/2022 13:13",
+                    "estado": "Vigente",
+                    "fechaFinal": null
+                }
+            ]
+        },
+        {
+            "nit": "3002",
+            "nombre": "Paulo Armas",
+            "usuario": "PArmas",
+            "clave": "Maya354ALD",
+            "direccion": "Licon marry land 13 av",
+            "correoElectronico": "pArmas@worldirect.com",
+            "listaInstancias": [
+                {
+                    "id": "322",
+                    "idConfig": "211",
+                    "nombre": "WorldirectDev2",
+                    "fechaInicio": "Guatemala 01/07/2022 ",
+                    "estado": "Cancelada",
+                    "fechaFinal": "10/07/2022 Guatemala"
+                }
+            ]
+        }
+    ]
+}

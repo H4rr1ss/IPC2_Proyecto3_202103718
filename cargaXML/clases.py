@@ -1,58 +1,63 @@
 class Recurso(object):
-    def __init__(self, id, name, abbreviation, metrics, type, price):
+    def __init__(self, id, nombre, abreviatura, metrica, tipo, valorXhora):
         self.id = id
-        self.name = name
-        self.abbreviation = abbreviation
-        self.metrics = metrics
-        self.type = type
-        self.price = price
+        self.nombre = nombre
+        self.abreviatura = abreviatura
+        self.metrica = metrica
+        self.tipo = tipo
+        self.valorXhora = valorXhora
 
 # -------------------------------------------------------------------------------------------------------------------------
 
+
 class RecursoConfig(object):
-    def __init__(self, id, lot):
+    def __init__(self, id, cantidad):
         self.id = id
-        self.lot = lot
-    
+        self.cantidad = cantidad
+
 
 class Configuracion(object):
-    def __init__(self, id, name, description, listRecursos):
+    def __init__(self, id, nombre, descripcion, listaRecursos):
         self.id = id
-        self.name = name
-        self.description = description
-        self.listRecursos = listRecursos
+        self.nombre = nombre
+        self.descripcion = descripcion
+        self.listaRecursos = listaRecursos
 
 
 class Categoria(object):
-    def __init__(self, id, name, description, workload, listConfiguration):
+    def __init__(self, id, nombre, descripcion, cargaTrabajo, listaConfiguraciones):
         self.id = id
-        self.name = name
-        self.description = description
-        self.workload = workload
-        self.listConfiguration = listConfiguration
+        self.nombre = nombre
+        self.descripcion = descripcion
+        self.cargaTrabajo = cargaTrabajo
+        self.listaConfiguraciones = listaConfiguraciones
 
 # -------------------------------------------------------------------------------------------------------------------------
+
 
 class Instancia(object):
-    def __init__(self, id, idConfig, name, dateInitial, status, dateFinal):
+    def __init__(self, id, idConfig, nombre, fechaInicio, estado, fechaFinal):
         self.id = id
         self.idConfig = idConfig
-        self.name = name
-        self.dateInitial = dateInitial
-        self.status = status
-        self.dateFinal = dateFinal
+        self.nombre = nombre
+        self.fechaInicio = fechaInicio
+        self.estado = estado
+        self.fechaFinal = fechaFinal
+
 
 class Cliente(object):
-    def __init__(self, nit, name, user, pasw, address, email, listInstance):
+    def __init__(self, nit, nombre, usuario, clave, direccion, correoElectronico, listaInstancias):
         self.nit = nit
-        self.name = name
-        self.user = user
-        self.pasw = pasw
-        self.address = address
-        self.email = email
-        self.listInstance = listInstance
+        self.nombre = nombre
+        self.usuario = usuario
+        self.clave = clave
+        self.direccion = direccion
+        self.correoElectronico = correoElectronico
+        self.listaInstancias = listaInstancias
 
-# -------------------------------------------------------------------------------------------------------------------------
+# -----------------------------------------CLASE DE CONSUMO-------------------------------------------------------
+
+
 class Consumo(object):
     def __init__(self, nitCliente, idInstancia, tiempo, fechaHora):
         self.nitCliente = nitCliente

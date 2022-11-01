@@ -5,6 +5,15 @@ import re
 
 cargaXML = Blueprint('cargaXML', __name__)
 
+def dateCongiER(date):
+    try:
+        fechaER = re.findall("\d{2}/\d{2}/\d{4}", date)
+        stringFecha = fechaER
+        print(date)
+        print(stringFecha)
+        return stringFecha
+    except:
+        print('ocurrio un error')
 
 @cargaXML.route('/cargaXML/configuracion', methods=['POST'])
 def rutaConfig():
@@ -23,18 +32,20 @@ def rutaConfig():
     listCliente = json.loads(listClientesJson)
 
     # CREAR DB DE LOS RECURSOS Y CATEGORIAS INGRESADAS CON ARCHIVO XML ---->
-    data = {}# Se crea un diccionario
-    data['recursos'] = []# Una lista con un identificador ->recursos
-    data['categorias'] = []# Una lista con un identificador ->categorias
+    data = {}  # Se crea un diccionario
+    data['recursos'] = []  # Una lista con un identificador ->recursos
+    data['categorias'] = []  # Una lista con un identificador ->categorias
 
     for a in range(len(listRecursos)):
         objRecurso = listRecursos[a]
-        data['recursos'].append(json.loads(objRecurso))# Ingresando datos a lista que tiene el diccionario
+        # Ingresando datos a lista que tiene el diccionario
+        data['recursos'].append(json.loads(objRecurso))
 
     for b in range(len(listCategorias)):
         objCategoria = listCategorias[b]
-        data['categorias'].append(json.loads(objCategoria))# Ingresando datos a lista que tiene el diccionario
-    
+        # Ingresando datos a lista que tiene el diccionario
+        data['categorias'].append(json.loads(objCategoria))
+
     with open('./db/recursosYcategorias.json', 'w') as file:
         json.dump(data, file, indent=4)
 
@@ -44,27 +55,41 @@ def rutaConfig():
 
     for c in range(len(listCliente)):
         objClient = listCliente[c]
-        dataClients['clientes'].append(json.loads(objClient))# Ingresando datos a lista que tiene el diccionario
+        cliente = json.loads(objClient)
+
+        listaInstancias = cliente.get('listaInstancias')
+        print('\n--------------------')
+        print(cliente)
+        print('lista:------------')
+        print(listaInstancias)
+
+        
+        ## PENDIENTEEE
+        #for instancia in listaInstancias['listaInstancias']:
+            #prjint
+            # aplicando ER a la fecha en formato 'dd/mm/yyyy'
+            #fechaInicioER = dateCongiER(instancia.get('fechaInicio'))
+            # Modificando el atributo fechaHora del diccionario
+            #instancia['fechaInicio'] = fechaInicioER
+
+        # Ingresando datos a lista que tiene el diccionario
+        dataClients['clientes'].append(cliente)
 
     with open('./db/clientes.json', 'w') as file:
         json.dump(dataClients, file, indent=4)
 
-
     return jsonify({'nombre de recurso': 'objRecurso.getName()'})
 
 
-
-
-
-
-#-------------------------------------------------------------------------------------------------------
-def dateER(date):
+# -------------------------------------------------------------------------------------------------------
+def dateConsumoER(date):
     try:
         fechaER = re.findall("\d{2}/\d{2}/\d{4} \d{2}:\d{2}", date)
         stringFecha = fechaER[0]
         return stringFecha
     except:
         print('ocurrio un error')
+
 
 @cargaXML.route('/cargaXML/consumo', methods=['POST'])
 def xmlConsumo():
@@ -74,20 +99,21 @@ def xmlConsumo():
     listConsumo = json.loads(listConsumoJson)
 
     # CREAR DB DE LOS CONSUMOS INGRESADAS CON ARCHIVO XML ---->
-    data = {}# Se crea un diccionario
-    data['consumos'] = []# Una lista con un identificador ->consumos
+    data = {}  # Se crea un diccionario
+    data['consumos'] = []  # Una lista con un identificador ->consumos
 
     for i in range(len(listConsumo)):
         objConsumo = listConsumo[i]
-        consumo = json.loads(objConsumo)# Deserealización
-        
-        fechaER = dateER(consumo.get('fechaHora'))# aplicando ER a la fecha en formato 'dd/mm/yyyy'
-        consumo['fechaHora'] = fechaER# Modificando el atributo fechaHora del diccionario
+        consumo = json.loads(objConsumo)  # Deserealización
 
-        data['consumos'].append(consumo)# Ingresando datos a la DB
+        # aplicando ER a la fecha en formato 'dd/mm/yyyy'
+        fechaER = dateConsumoER(consumo.get('fechaHora'))
+        # Modificando el atributo fechaHora del diccionario
+        consumo['fechaHora'] = fechaER
+
+        data['consumos'].append(consumo)  # Ingresando datos a la DB
 
     with open('./db/Consumos.json', 'w') as file:
         json.dump(data, file, indent=4)
 
     return jsonify({'msg': 'xml de consumo correctamente cargado'})
-
