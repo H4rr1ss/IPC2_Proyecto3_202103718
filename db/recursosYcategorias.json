@@ -31,6 +31,22 @@
             "metrica": "GB",
             "tipo": "Almacenamiento",
             "valorXhora": "0.01"
+        },
+        {
+            "id": "1000",
+            "nombre": "Nucleo de unidad central de procesamiento",
+            "abreviatura": "CPU",
+            "metrica": "Ghz ",
+            "tipo": "Hardware",
+            "valorXhora": "0.02"
+        },
+        {
+            "id": "1000",
+            "nombre": "Nucleo de unidad central de procesamientox",
+            "abreviatura": "CPU",
+            "metrica": "Ghz ",
+            "tipo": "Software",
+            "valorXhora": "0.02"
         }
     ],
     "categorias": [
@@ -133,6 +149,13 @@
                     ]
                 }
             ]
+        },
+        {
+            "id": "2003",
+            "nombre": "Small",
+            "descripcion": "Instancias para ejecucion de proyectos en consola",
+            "cargaTrabajo": "Minima",
+            "listaConfiguraciones": []
         }
     ]
 }
