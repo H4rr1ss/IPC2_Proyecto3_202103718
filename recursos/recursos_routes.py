@@ -4,19 +4,19 @@ from db.database import DB
 
 recurso = Blueprint('recurso', __name__)
 
-def filtro(body):
+def __filtro(body):
     if not('objRecursos' in body):
         return body
 
-    objClientesJson = body['objCliente']#PENDIENTE DE MODIFICAR (FRONT)
-    ret = json.loads(objClientesJson)
-    return ret
+    objRecursoJSON = body['objRecurso']#PENDIENTE DE MODIFICAR (FRONT)
+    retorno = json.loads(objRecursoJSON)
+    return retorno
 
 @recurso.route('/recurso/crearRecurso', methods=['POST'])
 def crearRecurso():
     data = request.get_json()
     # -----RECURSOS-----
-    body = filtro(data)
+    body = __filtro(data)
 
     try:
         # VALIDACIONES---

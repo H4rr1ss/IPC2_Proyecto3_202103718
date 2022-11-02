@@ -5,10 +5,8 @@ from db.database import DB
 
 cliente = Blueprint('cliente', __name__)
 
-def filtro(body):
+def __filtro(body):
     if not('objCliente' in body):
-        return body
-    elif not('objInstancia' in body):
         return body
 
     objClientesJson = body['objCliente']
@@ -20,7 +18,7 @@ def crearCliente():
 
     data = request.get_json()
     # ------CLIENTE------
-    body = filtro(data)
+    body = __filtro(data)
 
     try:
         # VALIDACIONES---
@@ -36,12 +34,20 @@ def crearCliente():
     except:
         return {'msg': 'Ocurrio un error en el servidor'}, 500
 
+def __filtroInstancia(body):
+    if not('objInstancia' in body):
+        return body
+
+    objInstanciaJSON = body['objInstancia']
+    retorno = json.loads(objInstanciaJSON)
+    return retorno
+
 @cliente.route('/cliente/crearInstancia', methods=['POST'])
 def crearInstancia():
 
     data = request.get_json()
     # -------------instancia--------------
-    body = filtro(data)
+    body = __filtroInstancia(data)
 
     try:
         # VALIDACIONES---

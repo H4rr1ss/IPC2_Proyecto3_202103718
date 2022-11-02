@@ -17,30 +17,6 @@
             "valorXhora": "0.03"
         },
         {
-            "id": "1002",
-            "nombre": "Unidad de estado solido",
-            "abreviatura": "SSD",
-            "metrica": "GB",
-            "tipo": "Almacenamiento",
-            "valorXhora": "0.03"
-        },
-        {
-            "id": "1003",
-            "nombre": "Unidad de disco duro",
-            "abreviatura": "DD",
-            "metrica": "GB",
-            "tipo": "Almacenamiento",
-            "valorXhora": "0.01"
-        },
-        {
-            "id": "1000",
-            "nombre": "Nucleo de unidad central de procesamiento",
-            "abreviatura": "CPU",
-            "metrica": "Ghz ",
-            "tipo": "Hardware",
-            "valorXhora": "0.02"
-        },
-        {
             "id": "1000",
             "nombre": "Nucleo de unidad central de procesamientox",
             "abreviatura": "CPU",
@@ -120,6 +96,12 @@
                             "cantidad": " 90 "
                         }
                     ]
+                },
+                {
+                    "id": "2112122",
+                    "nombre": "Default ",
+                    "descripcion": "Configuracion por default",
+                    "listaRecursos": []
                 }
             ]
         },

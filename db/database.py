@@ -1,10 +1,10 @@
 import json
-from cargaXML.clases import Cliente, Recurso, Categoria
+from cargaXML.clases import Cliente, Recurso, Categoria, Configuracion
 import re
 
 class Database():
 
-    # ---------RECURSO---------
+    # <VALIDACIONES>  [APARTADO RECURSOS]----------------------------
     def verificacionTipo(self, tipo):
         if not(tipo.lower() in ['hardware', 'software']):
             return True
@@ -20,7 +20,7 @@ class Database():
         with open('./db/recursosYcategorias.json', 'w') as file:
             json.dump(data, file, indent=4)
 
-    # -------- CLIENTE --------
+    # <VALIDACIONES>  [APARTADO CLIENTES]----------------------------
     def verificacionNIT(self, nitEntrada):
         with open('./db/clientes.json') as file:
             data = json.load(file)
@@ -42,7 +42,7 @@ class Database():
         with open('./db/clientes.json', 'w') as file:
             json.dump(data, file, indent=4)
 
-    # -------- INSTANCIA --------
+    # <VALIDACIONES>  [APARTADO INSTANCIAS]----------------------------
     def verificarClienteExistente(self, nitEntrada):
         with open('./db/clientes.json') as file:
             data = json.load(file)
@@ -76,8 +76,6 @@ class Database():
 
                     client['listaInstancias'].append(instancia.__dict__)
 
-                
-
         with open('./db/clientes.json', 'w') as file:
             json.dump(data, file, indent=4)
 
@@ -92,7 +90,7 @@ class Database():
                             return True
         return False
 
-    # -------- CATEGORIAS --------
+    # <VALIDACIONES>  [APARTADO CATEGORIAS]----------------------------
     def verificacionCategoriaID(self, idEntrada):
         with open('./db/recursosYcategorias.json') as file:
             data = json.load(file)
@@ -108,6 +106,42 @@ class Database():
         with open('./db/recursosYcategorias.json', 'r+') as file:
             data = json.load(file)
             data['categorias'].append(categoria.__dict__)
+
+        with open('./db/recursosYcategorias.json', 'w') as file:
+            json.dump(data, file, indent=4)
+
+    # <VALIDACIONES>  [APARTADO CONFIGURACIONES]----------------------------
+    def verificacionCategoriaExistente(self, idCate):
+        with open('./db/recursosYcategorias.json') as file:
+            data = json.load(file)
+            for categoria in data['categorias']:
+                id = categoria['id']
+                if idCate == id:
+                    return True
+        return False
+
+    def verificacionConfigID(self, idCate, idConfig):
+        with open('./db/recursosYcategorias.json') as file:
+            data = json.load(file)
+            for categoria in data['categorias']:
+                id = categoria['id']
+                if idCate == id:
+                    for config in categoria['listaConfiguraciones']:
+                        idC = config['id']
+                        if idConfig == idC:
+                            return True
+        return False
+
+    def addConfiguracion(self, idCate, idC, nombre, descripcion, listaRecursos):
+        configuracion = Configuracion(idC, nombre, descripcion, listaRecursos)
+
+        with open('./db/recursosYcategorias.json', 'r+') as file:
+            data = json.load(file)
+
+            for categoria in data['categorias']:
+                if idCate == categoria['id']:
+                    categoria['listaConfiguraciones'].append(configuracion.__dict__)
+                        
 
         with open('./db/recursosYcategorias.json', 'w') as file:
             json.dump(data, file, indent=4)
