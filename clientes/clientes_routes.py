@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request
 import json
+
 from db.database import DB
 
 cliente = Blueprint('cliente', __name__)
@@ -28,7 +29,8 @@ def crearCliente():
         if DB.verificacionNIT(body.get('nit')):
             return {'msg': 'cliente duplicado'}, 400
         # ---------------
-        
+
+        DB.agregarCliente(body['nit'], body['nombre'], body['usuario'], body['clave'], body['direccion'], body['correoElectronico'], body['listaInstancias'])
         return {'msg': 'Cliente creado exitosamente'}, 201
     except:
         return {'msg': 'Ocurrio un error en el servidor'}, 500

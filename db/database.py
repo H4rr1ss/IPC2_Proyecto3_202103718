@@ -1,4 +1,5 @@
 import json
+from cargaXML.clases import Cliente
 
 class Database():
 
@@ -13,5 +14,16 @@ class Database():
                     return True
                 
         return False
+
+    def agregarCliente(self, nit, name, user, passw, address, email, listInstance):
+        cliente = Cliente(nit, name, user, passw, address, email, listInstance)
+
+        with open('./db/clientes.json', 'r+') as file:
+            data = json.load(file)
+            data['clientes'].append(cliente.__dict__)
+
+        with open('./db/clientes.json', 'w') as file:
+            json.dump(data, file, indent=4)
+
 
 DB = Database()

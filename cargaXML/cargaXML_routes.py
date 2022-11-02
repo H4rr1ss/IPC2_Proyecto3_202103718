@@ -8,9 +8,7 @@ cargaXML = Blueprint('cargaXML', __name__)
 def dateCongiER(date):
     try:
         fechaER = re.findall("\d{2}/\d{2}/\d{4}", date)
-        stringFecha = fechaER
-        print(date)
-        print(stringFecha)
+        stringFecha = fechaER[0]
         return stringFecha
     except:
         print('ocurrio un error')
@@ -56,24 +54,15 @@ def rutaConfig():
     for c in range(len(listCliente)):
         objClient = listCliente[c]
         cliente = json.loads(objClient)
-
-        listaInstancias = cliente.get('listaInstancias')
-        print('\n--------------------')
-        print(cliente)
-        print('lista:------------')
-        print(listaInstancias)
-
-        
-        ## PENDIENTEEE
-        #for instancia in listaInstancias['listaInstancias']:
-            #prjint
-            # aplicando ER a la fecha en formato 'dd/mm/yyyy'
-            #fechaInicioER = dateCongiER(instancia.get('fechaInicio'))
-            # Modificando el atributo fechaHora del diccionario
-            #instancia['fechaInicio'] = fechaInicioER
-
-        # Ingresando datos a lista que tiene el diccionario
         dataClients['clientes'].append(cliente)
+
+        # APLICACION DE ER PARA LA FECHA en formato 'dd/mm/yyyy' ----->
+        for data in dataClients['clientes']:
+            for instancia in data['listaInstancias']:
+                fechaInicio = dateCongiER(instancia['fechaInicio'])
+                fechaFinal = dateCongiER(instancia['fechaFinal'])
+                instancia['fechaInicio'] = fechaInicio
+                instancia['fechaFinal'] = fechaFinal
 
     with open('./db/clientes.json', 'w') as file:
         json.dump(dataClients, file, indent=4)
@@ -89,7 +78,6 @@ def dateConsumoER(date):
         return stringFecha
     except:
         print('ocurrio un error')
-
 
 @cargaXML.route('/cargaXML/consumo', methods=['POST'])
 def xmlConsumo():
