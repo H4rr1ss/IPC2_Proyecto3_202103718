@@ -17,12 +17,20 @@
             "valorXhora": "0.03"
         },
         {
-            "id": "1000",
-            "nombre": "Nucleo de unidad central de procesamientox",
-            "abreviatura": "CPU",
-            "metrica": "Ghz ",
-            "tipo": "Software",
-            "valorXhora": "0.02"
+            "id": "1002",
+            "nombre": "Unidad de estado solido",
+            "abreviatura": "SSD",
+            "metrica": "GB",
+            "tipo": "Almacenamiento",
+            "valorXhora": "0.03"
+        },
+        {
+            "id": "1003",
+            "nombre": "Unidad de disco duro",
+            "abreviatura": "DD",
+            "metrica": "GB",
+            "tipo": "Almacenamiento",
+            "valorXhora": "0.01"
         }
     ],
     "categorias": [
@@ -131,13 +139,6 @@
                     ]
                 }
             ]
-        },
-        {
-            "id": "2003",
-            "nombre": "Small",
-            "descripcion": "Instancias para ejecucion de proyectos en consola",
-            "cargaTrabajo": "Minima",
-            "listaConfiguraciones": []
         }
     ]
 }

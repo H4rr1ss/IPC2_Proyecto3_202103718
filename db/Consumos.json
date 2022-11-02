@@ -1,41 +1,46 @@
 {
-    "clientes": [
+    "consumos": [
         {
-            "nit": "3000",
-            "nombre": "Juan Pedro Gonzales",
-            "usuario": "JuanPe",
-            "clave": "MarmotaArbolNido",
-            "direccion": "10 calle 13-45 z 1",
-            "correoElectronico": "jaunpems@gosth.com",
-            "listaInstancias": [
-                {
-                    "id": "31",
-                    "idConfig": "201",
-                    "nombre": "GhostDev1",
-                    "fechaInicio": "10/06/2022",
-                    "estado": "Vigente",
-                    "fechaFinal": null
-                }
-            ]
+            "nitCliente": "3000",
+            "idInstancia": "31",
+            "tiempo": " 8 ",
+            "fechaHora": "06/10/2022 13:00"
         },
         {
-            "nit": "3002",
-            "nombre": "Paulo Armas",
-            "usuario": "PArmas",
-            "clave": "Maya354ALD",
-            "direccion": "Licon marry land 13 av",
-            "correoElectronico": "pArmas@worldirect.com",
-            "listaInstancias": [
-                {
-                    "id": "322",
-                    "idConfig": "211",
-                    "nombre": "WorldirectDev2",
-                    "fechaInicio": "01/07/2022",
-                    "estado": "Cancelada",
-                    "fechaFinal": "10/07/2022"
-                }
-            ]
+            "nitCliente": "3000",
+            "idInstancia": "31",
+            "tiempo": " 10.25 ",
+            "fechaHora": "06/12/2022 12:20"
         },
-        "{\"nit\": \"3009\", \"nombre\": \"Lourdes Manuel\", \"usuario\": \"PArmas\", \"clave\": \"Maya354ALD\", \"direccion\": \"Licon marry land 13 av\", \"correoElectronico\": \"lourdes@worldirect.com\", \"listaInstancias\": [{\"id\": \"3000\", \"idConfig\": \"211\", \"nombre\": \"WorldirectDev2\", \"fechaInicio\": \"Guatemala 01/07/2022 \", \"estado\": \"Cancelada\", \"fechaFinal\": \"10/09/2002 Guatemala\"}]}"
+        {
+            "nitCliente": "3000",
+            "idInstancia": "31",
+            "tiempo": " 2 ",
+            "fechaHora": "06/15/2022 11:35"
+        },
+        {
+            "nitCliente": "3002",
+            "idInstancia": "321",
+            "tiempo": " 23.45 ",
+            "fechaHora": "09/15/2022 11:35"
+        },
+        {
+            "nitCliente": "3002",
+            "idInstancia": "321",
+            "tiempo": " 10.15 ",
+            "fechaHora": "09/23/2022 18:12"
+        },
+        {
+            "nitCliente": "3002",
+            "idInstancia": "322",
+            "tiempo": " 23.30",
+            "fechaHora": "07/15/2022 11:31"
+        },
+        {
+            "nitCliente": "3002",
+            "idInstancia": "323",
+            "tiempo": "pendiente",
+            "fechaHora": "2/11/2022 42:39"
+        }
     ]
 }

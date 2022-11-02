@@ -1,6 +1,7 @@
 import json
-from cargaXML.clases import Cliente, Recurso, Categoria, Configuracion
+from cargaXML.clases import Cliente, Recurso, Categoria, Configuracion, Consumo
 import re
+from datetime import datetime
 
 class Database():
 
@@ -43,17 +44,6 @@ class Database():
             json.dump(data, file, indent=4)
 
     # <VALIDACIONES>  [APARTADO INSTANCIAS]----------------------------
-    def verificarClienteExistente(self, nitEntrada):
-        with open('./db/clientes.json') as file:
-            data = json.load(file)
-
-            for client in data['clientes']:
-                nit = client['nit']
-
-                if nitEntrada == nit:
-                    return False
-        return True
-
     def __fechaER(self, date):
         try:
             fechaER = re.findall("\d{2}/\d{2}/\d{4}", date)
@@ -145,5 +135,41 @@ class Database():
 
         with open('./db/recursosYcategorias.json', 'w') as file:
             json.dump(data, file, indent=4)
+
+    # <VALIDACIONES>  [APARTADO CANCELAR INSTANCIAS]----------------------------
+    def modificacionesCliente(self, nitCliente, idInstancia):
+        with open('./db/clientes.json') as file:
+            data = json.load(file)
+
+            for client in data['clientes']:
+                if nitCliente == client.get('nit'):
+                    for instancia in client['listaInstancias']:
+                        if instancia.get('id') == idInstancia:
+                            print('estado de la instancia: {}'.format(instancia['estado']))
+                            if instancia.get('estado').lower() == 'cancelada':
+                                return None
+                            else:
+                                instancia['estado'] = 'Cancelada'
+                                now = datetime.now()
+
+                                fechaHora = '{}/{}/{} {}:{}'.format(now.day, now.month, now.year, now.minute, now.second)
+                                fechaFinal = '{}/{}/{}'.format(now.day, now.month, now.year)
+                                
+                                instancia['fechaFinal'] = fechaFinal
+        with open('./db/clientes.json', 'w') as file:
+            json.dump(data, file, indent=4)
+
+        return fechaHora
+
+    def agregarConsumo(self, nitCliente, idInstancia, tiempo, fechaHora):
+        consumo = Consumo(nitCliente, idInstancia, tiempo, fechaHora)
+       
+        with open('./db/Consumos.json', 'r+') as file:
+            data = json.load(file)
+            data['consumos'].append(consumo.__dict__)
+        
+        with open('./db/Consumos.json', 'w') as file:
+            json.dump(data, file, indent=4)
+
 
 DB = Database()
