@@ -1,61 +1,70 @@
 from flask import Blueprint, jsonify, request
 import json
+from cargaXML.clases import Configuracion
 from db.database import DB
 
 categoria = Blueprint('categoria', __name__)
 
-def __filtro(body):
+
+def filtro(body):
     if not ('objCategoria' in body):
         return body
 
     objCategoriaJson = body['objCategoria']
-    retorno = json.loads(objCategoriaJson)
-    return retorno
+    ret = json.loads(objCategoriaJson)
+    return ret
+
 
 @categoria.route('/categoria/crearCategoria', methods=['POST'])
 def crearCategoria():
     data = request.get_json()
+    body = filtro(data)
     # -----CATEGORIAS-----
-    body = __filtro(data)
     try:
         # VALIDACIONES---
-        if not ('id' in body and 'nombre' in body and 'descripcion' in body and 'cargaTrabajo' in body and 'listaConfiguraciones' in body):
+        if not ('id' in body and 'nombre' in body and 'descripcion' in body and 'cargaTrabajo' in body and 'listaConfiguraciones'):
             return {'msg': 'Faltan campos en el cuerpo de la petición'}, 400
 
-        if DB.verificacionCategoriaID(body.get('id')):
+        if DB.verificacionID(body.get('id')):
             return {'msg': 'Categoria duplicada'}, 400
         # ---------------
 
-        DB.addCategoria(body['id'], body['nombre'], body['descripcion'], body['cargaTrabajo'], body['listaConfiguraciones'])
+        DB.addCategoria(body['id'], body['nombre'], body['descripcion'], body['cargaTrabajo'],
+                        body['listaConfiguraciones'])
         return {'msg': 'Categoria creada exitosamente'}, 201
     except:
-        return {'msg': 'Ocurrio un error en el servidor'}, 500
+        return {'msg': 'Ha ocurrido un error en el servidor'}
 
-def __filtroConfig(body):
+# ------------------------------------------------Configuracion-----------------------------------------
+
+
+def filtroConfig(body):
     if not ('objConfig' in body):
         return body
 
-    objCategoriaJson = body['objConfig']
-    retorno = json.loads(objCategoriaJson)
-    return retorno
+    objConfiguracionJson = body['objConfig']
+    ret = json.loads(objConfiguracionJson)
+    return ret
+
 
 @categoria.route('/categoria/crearConfiguracion', methods=['POST'])
 def crearConfiguracion():
     data = request.get_json()
-    body = __filtroConfig(data)
+    body = filtroConfig(data)
+    # -----CONFIGURACIONES-----
     try:
         # VALIDACIONES---
-        if not ('idCategoria' in body and 'id' in body and 'nombre' in body and 'descripcion' in body and 'listaRecursos'):
+        if not ('id' in body and 'idCategoria' and 'nombre' in body and 'descripcion' in body and 'listarecursos'):
             return {'msg': 'Faltan campos en el cuerpo de la petición'}, 400
 
-        if not(DB.verificacionCategoriaExistente(body.get('idCategoria'))):
-            return {'msg': 'Categoria no existente.'}, 400
+        if DB.verificacionID(body['idCategoria']):
+            if DB.verificacionIDConfig(body.get('id')):
+                return {'msg': 'Configuracion duplicada'}, 400
 
-        if DB.verificacionConfigID(body.get('idCategoria'), body.get('id')):
-            return {'msg': 'Configuracion duplicada'}, 400
-        # ---------------
-
-        DB.addConfiguracion(body.get('idCategoria'), body['id'], body['nombre'], body['descripcion'], body['listaRecursos'])
-        return {'msg': 'Configuración creada exitosamente'}, 201
+            # ---------------
+            DB.addConfiguracion(
+                body['id'], body['nombre'], body['descripcion'], body['listaRecursos'], body['idCategoria'])
+            return {'msg': 'Configuracion creada exitosamente'}, 201
+        return {'msg': 'la categoria no existe o no se encontro'}
     except:
-        return {'msg': 'Ocurrio un error en el servidor'}, 500
+        return {'msg': 'Ha ocurrido un error en el servidor'}

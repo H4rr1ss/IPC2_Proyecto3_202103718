@@ -19,6 +19,7 @@ class RecursoConfig(object):
 class Configuracion(object):
     def __init__(self, id, nombre, descripcion, listaRecursos):
         self.id = id
+        self.idCategoria = ""
         self.nombre = nombre
         self.descripcion = descripcion
         self.listaRecursos = listaRecursos
@@ -38,6 +39,7 @@ class Categoria(object):
 class Instancia(object):
     def __init__(self, id, idConfig, nombre, fechaInicio, estado, fechaFinal):
         self.id = id
+        self.nitCliente = ""
         self.idConfig = idConfig
         self.nombre = nombre
         self.fechaInicio = fechaInicio

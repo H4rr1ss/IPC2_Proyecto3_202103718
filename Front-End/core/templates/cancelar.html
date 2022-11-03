@@ -1,0 +1,53 @@
+{%extends 'base.html'%}
+{%load static%}
+{%block fonts%}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Silkscreen&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+{%endblock%}
+{%block title%}Cancelar Instancias{%endblock%}
+{%block body%}
+<body class="body-principal">
+    <main id="main-doc">
+      <section class="main-section" id="select_consumo">
+          <header>Cancelar Instancias</header>
+          <br>
+          <p>En este apartado tendras la opcion de cancelar una instancia, por medio de un formulario que 
+            necesita el id de la instancia y el nit del cliente al cual le pertenece esa instancia. Una vez 
+            hechos los cambios estos no se pueden revertir.<br> Para enviar los datos de la instancia
+            que deseas eliminar deberas presionar el boton de enviar cuando ya hayas ingresado los datos.
+          </p>
+        <form action="/cancelar/" method="post" class="recurso">
+            {% csrf_token %}
+            <h2>Cancelar Instancia</h2>
+            <label for="nit_cliente">Nit de Cliente </label>
+            <br>
+            <input type="text" name="nit_cliente" id="recurso">
+            <br>
+            <label for="id_instancia">ID instancia</label>
+            <br>
+            <input type="text" name="id_instancia" id="recurso">
+            <br>
+            <input type="submit" value="Guardar" class="btn btn-danger">
+        </form>
+        <h3>{{msg.msg}}</h3>
+      </section>
+      <nav id="navbar">
+          <header>
+            <img src="../static/IMG/Logo.png" alt="Logo" class="logo1">
+            <br>
+            <a href="{%url 'main'%}" class="nav-link">Pagina Principal</a>
+            <hr>
+            <a href="{%url 'leer'%}" class="nav-link">Configuracion</a>
+            <hr>
+            <a href="{%url 'consumir'%}" class="nav-link">Consumo</a>
+            <hr>
+            <a class="nav-link">Logout</a>
+          </header>
+        </nav>
+    </main>
+  </body>
+{%endblock%}

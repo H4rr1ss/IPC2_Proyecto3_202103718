@@ -1,0 +1,294 @@
+{%extends 'base.html'%}
+{%load static%}
+{%block fonts%}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Silkscreen&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+{%endblock%}
+{%block title%}Tecnologias Chapinas{%endblock%}
+{%block body%}
+<body class="body-principal">
+  <main id="main-doc">
+    <section class="main-section" id="segunda_seccion">
+        <h3>{{json.msg}}</h3>
+        <header>Visualizar Equipos Actualmente en la nube</header>
+        <div class="accordion accordion-flush" id="accordionFlushExample">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingOne">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                Recursos
+              </button>
+            </h2>
+            <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+              <div class="accordion-body">
+                <h4>HARDWARE</h4>
+                  <h6>ID de recurso</h6>
+                    {{ json.idRecurso }}
+                    <hr>
+                  <h6>Nombre</h6>
+                  {{json.nombreRecurso}}
+                  <hr>
+                  <h6>Abreviatura</h6>
+                  {{json.abreviatura}}
+                  <hr>
+                  <h6>Metrica</h6>
+                  {{json.metrica}}
+                  <hr>
+                  <h6>Tipo</h6>
+                  {{json.tipo}}
+                  <hr>
+                  <h6>Precio</h6>
+                  {{json.precio}}
+                  <br>
+                  <hr>
+                <h4>SOFTWARE</h4>
+                <h6>ID de recurso</h6>
+                    {{ json.idRecurso }}
+                    <hr>
+                  <h6>Nombre</h6>
+                  {{json.nombreRecurso}}
+                  <hr>
+                  <h6>Abreviatura</h6>
+                  {{json.abreviatura}}
+                  <hr>
+                  <h6>Metrica</h6>
+                  {{json.metrica}}
+                  <hr>
+                  <h6>Tipo</h6>
+                  {{json.tipo}}
+                  <hr>
+                  <h6>Precio</h6>
+                  {{json.precio}}
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingTwo">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+               Categoria
+              </button>
+            </h2>
+            <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+              <div class="accordion-body">
+                <h4>Lista de Categorias</h4>
+                <h6>ID Categoria</h6>
+                {{json.idRecurso}}
+                <hr>
+                <h6>Nombre Categoria</h6>
+                {{json.nombreCategoria}}
+                <hr>
+                <h6>Descripcion de categoria</h6>
+                {{json.descripcion}}
+                <hr>
+                <h6>Carga de trabajo</h6>
+                {{json.carga}}
+                <br>
+                <hr>
+                <h4>Configuración</h4>
+                <h6>ID de Categoria en Configuración</h6>
+                {{json.idConfigCategoria}}
+                <hr>
+                <h6>Nombre de Configuración</h6>
+                {{json.nombreConfig}}
+                <hr>
+                <h6>Descripcion de Configuración</h6>
+                {{json.descConfig}}
+                <hr>
+                <h6>ID de recurso en configuración</h6>
+                {{json.idRecursoConfig}}
+                <hr>
+                <h6>Cantidad de recurso en configuración</h6>
+                {{json.cantidad}}
+              </div>
+            </div>
+          </div>
+    </section>
+    <hr>
+    <section class="main-section" id="tercer_seccion">
+        <header>Ver Maquinas Activas</header>
+        <h4>Nombre de Cliente</h4>
+        <h6>{{json.nombreCliente}}</h6>
+        <h4>Nit de cliente</h4>
+        <h6>{{json.nit}}</h6>
+        <h4>Direccion del cliente</h4>
+        <h6>{{json.direccion}}</h6>
+        <ul>
+          <li>ID de la instancia: {{json.idInstancia}}</li>
+          <li>ID de la instancia en configuracion: {{json.idConfigInstancia}}</li>
+          <li>Nombre de instancia: {{json.nombreInstancia}}</li>
+          <li>Estado de la instancia: {{json.estado}}</li>
+          <li>Fecha de inicio de alquiler: {{json.fechaInicio}}</li>
+        </ul>
+    </section>
+    <hr>
+    <section class="main-section" id="nuevos_datos">
+      <header>Crear nueva configuración</header>
+      <p>Aqui podras crear instancias, configuraciones y usuarios manualmente, estos datos se guardaran
+        en la base de datos de Tecnologias Chapinas.
+      </p>
+      <div class="creacion">
+        <form action="" class="recurso" method="POST" id="recursos">
+          {% csrf_token %}
+          <h4>Recursos</h4>
+          <label for="id_recurso">ID</label>
+          <input type="text" name="id_recurso" id="recurso">
+          <label for="name_recurso">Nombre</label>
+          <input type="text" name="name_recurso" id="recurso">
+          <label for="abr_recurso">Abreviatura</label>
+          <input type="text" name="abr_recurso" id="recurso">
+          <br>
+          <br>
+          <label for="mtr_recurso">Metrica</label>
+          <input type="text" name="mtr_recurso" id="recurso">
+          <label for="tipo_recurso">Tipo</label>
+          <input type="text" name="tipo_recurso" id="recurso">
+          <label for="precio_recurso">Precio</label>
+          <input type="text" name="precio_recurso" id="recurso">
+          <button type="submit" class="btn btn-danger">Guardar</button>
+        </form>
+        <hr>
+        <form action="" class="recurso" method="POST">
+          {% csrf_token %}
+          <h4>Categoria</h4>
+          <label for="id_categoria">ID</label>
+          <input type="text" name="id_categoria" id="recurso">
+          <label for="name_categoria">Nombre</label>
+          <input type="text" name="name_categoria" id="recurso">
+          <br>
+          <br>
+          <label for="desc_categoria">Descripcion categoria</label>
+          <br>
+          <textarea name="desc_categoria" id="textarea" cols="25" rows="3"></textarea>
+          <br>
+          <label for="desc_carga">Descripcion Carga</label>
+          <br>
+          <textarea name="desc_carga" id="textarea" cols="25" rows="3"></textarea>
+          <br>
+          <input type="submit" value="Cargar" class="btn btn-danger">
+        </form>
+        <hr>
+        <form action="" method="post" class="recurso">
+          {% csrf_token %}
+          <h4>Configuración</h4>
+          <label for="id_config">ID</label>
+          <input type="text" name="id_config" id="recurso">
+          <label for="id_config_categoria">ID de categoria</label>
+          <input type="text" name="id_config_categoria" id="recurso">
+          <label for="name_config">Nombre</label>
+          <input type="text" name="name_config" id="recurso">
+          <br>
+          <br>
+          <label for="desc_config">Descripcion configuración</label>
+          <br>
+          <textarea name="desc_config" id="textarea" cols="25" rows="3"></textarea>
+          <h4>Configuración de recursos</h4>
+          <label for="id_config_recurso">ID de recurso en configuración</label>
+          <br>
+          <input type="number" name="id_config_recurso" id="recurso">
+          <br>
+          <label for="cantidad_recurso">Cantidad del recurso en la configuración</label>
+          <br>
+          <input type="number" name="cantidad_recurso" id="recurso">
+          <button type="submit" class="btn btn-danger">Guardar</button>
+        </form>
+        <hr>
+        <form action="" class="recurso" method="post">
+          {% csrf_token %}
+          <h4>Clientes</h4>
+          <label for="nit_cliente">ID</label>
+          <br>
+          <input type="number" name="nit_cliente" id="recurso">
+          <br>
+          <label for="name_cliente">Nombre</label>
+          <br>
+          <input type="text" name="name_cliente" id="recurso">
+          <br>
+          <label for="user_cliente">usuario</label>
+          <br>
+          <input type="text" name="user_cliente" id="recurso">
+          <br>
+          <label for="clave_cliente">Clave</label>
+          <br>
+          <input type="text" name="clave_cliente" id="recurso">
+          <br>
+          <label for="address_cliente">Dirección</label>
+          <br>
+          <input type="text" name="address_cliente" id="recurso">
+          <br>
+          <label for="mail_cliente">E-mail</label>
+          <br>
+          <input type="email" name="mail_cliente" id="recurso">
+          <br>
+          <br>
+          <button type="submit" class="btn btn-danger">Guardar</button>
+        </form>
+        <hr>
+        <form action="" method="post" class="recurso">
+          {% csrf_token %}
+          <h4>Instancias</h4>
+          <label for="id_instancia">ID instancia</label>
+          <br>
+          <input type="text" name="id_instancia" id="recurso">
+          <br>
+          <label for="nit_instancia">Nit Cliente</label>
+          <br>
+          <input type="text" name="nit_instancia" id="recurso">
+          <br>
+          <label for="id_configu">ID configuracion</label>
+          <br>
+          <input type="text" name="id_configu" id="recurso">
+          <br>
+          <label for="nombre_instancia">Nombre de instancia</label>
+          <br>
+          <input type="text" name="nombre_instancia" id="recurso">
+          <br>
+          <label for="estado_instancia">Estado de instancia</label>
+          <br>
+          <input type="text" name="estado_instancia" id="recurso">
+          <br>
+          <br>
+          <label for="inicio_instancia">Fecha de inicio</label>
+          <input type="text" name="inicio_instancia" id="recurso">
+          <label for="final_instancia">Fecha de vencimiento</label>
+          <input type="text" name="final_instancia" id="recurso">
+          <button type="submit" class="btn btn-danger">Guardar</button>
+        </form>
+      </div>
+      <br>
+    </section>
+    <hr>
+    <section class="main-section" id="cuarta_seccion">
+        <header>Generar Factura en PDF</header>
+        <p>En esta seccion podras administrar las facturas de los distintos clientes, estas facturas 
+          tendran los datos de los clientes, los datos de la categoria que el usuario selecciono, datos del recurso, tiempo total
+          en el que se utilizo el recurso, precio por hora del recurso y el total a pagar. Estas facturas seran entregadas en formato
+          pdf y se dara la opcion a descargar estas facturas por cada cliente registrado.
+        </p>
+        <br>
+        <div class="facturas"><p>Cliente 1</p><button type="button" class="btn btn-danger" onclick="">Generar Factura</button><button type="button" class="btn btn-danger">Analisis de ventas</button></div>  
+    </section>
+    <nav id="navbar">
+      <header>
+        <img src="../static/IMG/Logo.png" alt="Logo" class="logo1">
+        <br>
+        <a href="{%url 'leer'%}" class="nav-link">Seleccion de xml</a>
+        <hr>
+        <a href="#segunda_seccion" class="nav-link">Seleccionar Equipos</a>
+        <hr>
+        <a href="#tercer_seccion" class="nav-link">Ver Seleccion Actual</a>
+        <hr>
+        <a href="#nuevos_datos" class="nav-link">Crear nuevos datos</a>
+        <hr>
+        <a href="{%url 'cancelar'%}" class="nav-link">Cancelar Instancias</a>
+        <hr>
+        <a href="#cuarta_seccion" class="nav-link">Generar Factura en PDF</a>
+        <hr>
+        <a href="{%url 'home'%}" class="nav-link">Regresar a landing page</a>
+      </header>
+    </nav>
+  </main>
+</body>
+{%endblock%}

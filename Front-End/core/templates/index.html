@@ -1,0 +1,29 @@
+{%extends 'base.html'%}
+{%load static%}
+{%block fonts%}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Silkscreen&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap" rel="stylesheet">
+{%endblock%}
+{%block title%}Home Page{%endblock%}
+{%block body%}
+    <body class="main-body">
+        <header id="header" class="header">
+            <section class="menu-bar">
+                <ul class="menu">
+                    <a href="{%url 'home'%}"><li>Home</li></a>
+                    <a><li>Deshabilitado</li></a>
+                    <a><li>Deshabilitado!</li></a>
+                </ul>
+            </section>
+        </header>
+        <main class="main">
+            <div id="band">l</div>
+            <div class="logo"><a href="{%url 'main'%}"><img src="{%static 'IMG/logo.png'%}" alt="Logo"></a></div>
+            <h2 class="first">¿Quienes Somos?</h2>
+            <div class="paraghraph"><p>Somos una empresa dedicada al alquiler de computadoras por medio de un servicio de streaming</p></div>
+            <h2 class="second">La mejor solucion para equipos virtuales {{name.msg}}</h2>
+        </main>
+    </body>
+{%endblock%}

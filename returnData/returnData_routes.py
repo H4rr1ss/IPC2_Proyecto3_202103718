@@ -1,3 +1,6 @@
+from audioop import add
+from textwrap import indent
+from turtle import width
 from flask import Blueprint, jsonify, request
 from cargaXML.clases import Recurso, Consumo, Categoria, Cliente, Configuracion, Instancia, RecursoConfig
 import json
@@ -19,14 +22,11 @@ def consultarDatos():
             precio = []
             for id in data['recursos']:
                 idRecurso.append(id['id'])
-                nameRecurso.append(id['name'])
-                abreviatura.append(id['abbreviation'])
-                metrica.append(id['metrics'])
-                tipoRecurso.append(id['type'])
-                precio.append(id['price'])
-            objRecurso = Recurso(idRecurso, nameRecurso,
-                                abreviatura, metrica, tipoRecurso, precio)
-            objRecursoJson = json.dumps(objRecurso.__dict__)
+                nameRecurso.append(id['nombre'])
+                abreviatura.append(id['abreviatura'])
+                metrica.append(id['metrica'])
+                tipoRecurso.append(id['tipo'])
+                precio.append(id['valorXhora'])
             # ------------------------------Categorias------------------------
             idCategoria = []
             nameCategoria = []
@@ -39,62 +39,53 @@ def consultarDatos():
             cantidad = []
             for id in data['categorias']:
                 idCategoria.append(id['id'])
-                nameCategoria.append(id['name'])
-                descripcion.append(id['description'])
-                carga.append(id['workload'])
-                for config in id['listConfiguration']:
+                nameCategoria.append(id['nombre'])
+                descripcion.append(id['descripcion'])
+                carga.append(id['cargaTrabajo'])
+                for config in id['listaConfiguraciones']:
                     idConfigCategoria.append(config['id'])
-                    nameConfig.append(config['name'])
-                    descConfig.append(config['description'])
-                    for recurso in config['listRecursos']:
+                    nameConfig.append(config['nombre'])
+                    descConfig.append(config['descripcion'])
+                    for recurso in config['listaRecursos']:
                         idRecursoConfig.append(recurso['id'])
-                        cantidad.append(recurso['lot'])
-                    objRecursoConf = RecursoConfig(idRecursoConfig, cantidad)
-                    objRecursoConfJson = json.dumps(objRecursoConf.__dict__)
-                objConfig = Configuracion(
-                    idConfigCategoria, nameConfig, descConfig, objRecursoConfJson)
-                objConfigJson = json.dumps(objConfig.__dict__)
-            objCategoria = Categoria(
-                idCategoria, nameCategoria, descripcion, carga, objConfigJson)
-            objCategoriaJson = json.dumps(objCategoria.__dict__)
-            # ------------------------------------Cliente--------------------------------------
-            with open('./db/clientes.json') as file:
-                data = json.load(file)
-                nit = []
-                nameClient = []
-                user = []
-                passw = []
-                address = []
-                email = []
-                idInstancia = []
-                idConfigInstance = []
-                nameInstance = []
-                initDate = []
-                status = []
-                finalDate = []
-                for item in data['clientes']:
-                    nit.append(item['nit'])
-                    nameClient.append(item['name'])
-                    user.append(item['user'])
-                    passw.append(item['pasw'])
-                    address.append(item['address'])
-                    email.append(item['email'])
-
-                    for sub in item['listInstance']:
-                        idInstancia.append(sub['id'])
-                        idConfigInstance.append(sub['idConfig'])
-                        nameInstance.append(sub['name'])
-                        initDate.append(sub['dateInitial'])
-                        status.append(sub['status'])
-                        finalDate.append(sub['dateFinal'])
-
-        return jsonify({'idRecurso': idRecurso, 'nameRecurso': nameRecurso, 'abreviatura': abreviatura,
-                        'metrica': metrica, 'tipo': tipoRecurso, 'precio': precio, 'idCategoria': idCategoria, 'nameCategoria': nameCategoria, 'descripcion': descripcion, 'carga': carga, 'idConfigCategoria': idConfigCategoria,
-                        'nameConfig': nameConfig, 'descConfig': descConfig, 'idRecursoConfig': idRecursoConfig, 'lot': cantidad, 'nit': nit, 'nameClient': nameClient, 'user': user, 'pass': passw, 'address': address,
-                        'email': email, 'idInstancia': idInstancia, 'idConfigInstance': idConfigInstance, 'nameInstancia': nameInstance, 'initDate': initDate, 'status': status, 'finalDate': finalDate})
+                        cantidad.append(recurso['cantidad'])
+        # ------------------------------------Cliente--------------------------------------
+        with open('./db/clientes.json') as file:
+            data = json.load(file)
+            nit = []
+            nameClient = []
+            user = []
+            passw = []
+            address = []
+            email = []
+            idInstancia = []
+            idConfigInstance = []
+            nameInstance = []
+            initDate = []
+            status = []
+            finalDate = []
+            for item in data['clientes']:
+                nit.append(item['nit'])
+                nameClient.append(item['nombre'])
+                user.append(item['usuario'])
+                passw.append(item['clave'])
+                address.append(item['direccion'])
+                email.append(item['correoElectronico'])
+                for sub in item['listaInstancias']:
+                    idInstancia.append(sub['id'])
+                    idConfigInstance.append(sub['idConfig'])
+                    nameInstance.append(sub['nombre'])
+                    initDate.append(sub['fechaInicio'])
+                    status.append(sub['estado'])
+                    finalDate.append(sub['fechaFinal'])
+        return jsonify({'msg': 'Datos cargados', 'idRecurso': idRecurso, 'nombreRecurso': nameRecurso, 'abreviatura': abreviatura,
+                        'metrica': metrica, 'tipo': tipoRecurso, 'precio': precio, 'idCategoria': idCategoria, 'nombreCategoria': nameCategoria, 'descripcion': descripcion, 'carga': carga, 'idConfigCategoria': idConfigCategoria,
+                        'nombreConfig': nameConfig, 'descConfig': descConfig, 'idRecursoConfig': idRecursoConfig, 'cantidad': cantidad, 'nit': nit, 'nombreCliente': nameClient, 'usuario': user, 'clave': passw, 'direccion': address,
+                        'email': email, 'idInstancia': idInstancia, 'idConfigInstancia': idConfigInstance, 'nombreInstancia': nameInstance, 'fechaInicio': initDate, 'estado': status, 'fechaFinal': finalDate})
 
     except:
-        return {'msg': 'Ocurrio un error en el servidor'}, 500
+        return jsonify({'msg': 'No existe base de datos o ha ocurrido un error'})
+
 
 @data.route('/data/generarFactura', methods=['POST'])
 def generarFactura():

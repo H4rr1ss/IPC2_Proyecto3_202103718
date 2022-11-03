@@ -3,22 +3,19 @@ from cargaXML.clases import Cliente, Recurso, Categoria, Configuracion, Consumo
 import re
 from datetime import datetime
 
+
 class Database():
 
     # <VALIDACIONES>  [APARTADO RECURSOS]----------------------------
-    def verificacionTipo(self, tipo):
-        if not(tipo.lower() in ['hardware', 'software']):
-            return True
-        return False
 
     def addRecurso(self, id, nombre, abreviatura, metrica, tipo, valorXhora):
         recurso = Recurso(id, nombre, abreviatura, metrica, tipo, valorXhora)
-       
+
         with open('./db/recursosYcategorias.json', 'r+') as file:
             data = json.load(file)
             data['recursos'].append(recurso.__dict__)
-        
-        with open('./db/recursosYcategorias.json', 'w') as file:
+
+        with open('./db/recursosYcategorias.json', 'r+') as file:
             json.dump(data, file, indent=4)
 
     # <VALIDACIONES>  [APARTADO CLIENTES]----------------------------
@@ -30,7 +27,7 @@ class Database():
                 nit = client['nit']
                 if nitEntrada == nit:
                     return True
-                
+
         return False
 
     def agregarCliente(self, nit, name, user, passw, address, email, listInstance):
@@ -40,7 +37,7 @@ class Database():
             data = json.load(file)
             data['clientes'].append(cliente.__dict__)
 
-        with open('./db/clientes.json', 'w') as file:
+        with open('./db/clientes.json', 'r+') as file:
             json.dump(data, file, indent=4)
 
     # <VALIDACIONES>  [APARTADO INSTANCIAS]----------------------------
@@ -72,7 +69,6 @@ class Database():
     def verificarInstanciaExistente(self, nitCliente, idEntrada):
         with open('./db/clientes.json') as file:
             data = json.load(file)
-
             for client in data['clientes']:
                 if nitCliente == client.get('nit'):
                     for intancia in client['listaInstancias']:
@@ -81,13 +77,14 @@ class Database():
         return False
 
     # <VALIDACIONES>  [APARTADO CATEGORIAS]----------------------------
-    def verificacionCategoriaID(self, idEntrada):
+    def verificacionID(self, idEntrada):
         with open('./db/recursosYcategorias.json') as file:
             data = json.load(file)
             for categoria in data['categorias']:
                 id = categoria['id']
                 if idEntrada == id:
                     return True
+
         return False
 
     def addCategoria(self, id, nombre, desc, cargaT, listConfig):
@@ -97,29 +94,19 @@ class Database():
             data = json.load(file)
             data['categorias'].append(categoria.__dict__)
 
-        with open('./db/recursosYcategorias.json', 'w') as file:
+        with open('./db/recursosYcategorias.json', 'r+') as file:
             json.dump(data, file, indent=4)
 
     # <VALIDACIONES>  [APARTADO CONFIGURACIONES]----------------------------
-    def verificacionCategoriaExistente(self, idCate):
+    def verificacionIDConfig(self, idEntrada):
         with open('./db/recursosYcategorias.json') as file:
             data = json.load(file)
             for categoria in data['categorias']:
-                id = categoria['id']
-                if idCate == id:
-                    return True
-        return False
+                for config in categoria['listaConfiguraciones']:
+                    id = config['id']
+                    if idEntrada == id:
+                        return True
 
-    def verificacionConfigID(self, idCate, idConfig):
-        with open('./db/recursosYcategorias.json') as file:
-            data = json.load(file)
-            for categoria in data['categorias']:
-                id = categoria['id']
-                if idCate == id:
-                    for config in categoria['listaConfiguraciones']:
-                        idC = config['id']
-                        if idConfig == idC:
-                            return True
         return False
 
     def addConfiguracion(self, idCate, idC, nombre, descripcion, listaRecursos):
@@ -130,10 +117,10 @@ class Database():
 
             for categoria in data['categorias']:
                 if idCate == categoria['id']:
-                    categoria['listaConfiguraciones'].append(configuracion.__dict__)
-                        
+                    categoria['listaConfiguraciones'].append(
+                        configuracion.__dict__)
 
-        with open('./db/recursosYcategorias.json', 'w') as file:
+        with open('./db/recursosYcategorias.json', 'r+') as file:
             json.dump(data, file, indent=4)
 
     # <VALIDACIONES>  [APARTADO CANCELAR INSTANCIAS]----------------------------
@@ -146,6 +133,8 @@ class Database():
                     for instancia in client['listaInstancias']:
                         if instancia.get('id') == idInstancia:
                             print('estado de la instancia: {}'.format(instancia['estado']))
+
+                            config = instancia.get('idConfig')
                             if instancia.get('estado').lower() == 'cancelada':
                                 return None
                             else:
@@ -159,7 +148,7 @@ class Database():
         with open('./db/clientes.json', 'w') as file:
             json.dump(data, file, indent=4)
 
-        return fechaHora
+        return fechaHora, config
 
     def agregarConsumo(self, nitCliente, idInstancia, tiempo, fechaHora):
         consumo = Consumo(nitCliente, idInstancia, tiempo, fechaHora)
@@ -171,5 +160,29 @@ class Database():
         with open('./db/Consumos.json', 'w') as file:
             json.dump(data, file, indent=4)
 
+    def buscarRecursoo(self, id):
+        with open('./db/recursosYcategorias.json') as file:
+            data = json.load(file)
+
+            for recurso in data['recursos']:
+                if id == recurso['id']:
+                    valor = recurso['valorXhora']
+                    
+                    return valor
+
+    def calculoTiempo(self, idConfig):
+        total = 0
+        with open('./db/recursosYcategorias.json') as file:
+            data = json.load(file)
+
+            for categoria in data['categorias']:
+                for configuracion in categoria['listaConfiguraciones']:
+                    if configuracion['id'] == idConfig:
+                        for recurso in configuracion['listaRecursos']:
+                            cantidad = int(recurso['cantidad'])
+                            valor = self.buscarRecursoo(recurso['id'])
+                            total = str(cantidad*float(valor))
+
+                            return total
 
 DB = Database()

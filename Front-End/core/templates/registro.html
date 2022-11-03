@@ -1,0 +1,38 @@
+{%extends 'base.html'%}
+{%load static%}
+{%block fonts%}
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+{%endblock%}
+{%block title%}Registro de usuario{%endblock%}
+{%block body%}
+  <body class="register-page">
+    <header class="header">
+      <section class="menu-bar">
+          <ul class="menu">
+              <a href="{%url 'home'%}"><li>Home</li></a>
+          </ul>
+      </section>
+    </header>
+    <div class="main-block">
+      <h1>Registrarse</h1>
+      <form class="form" method="POST" action={{result.mail}}>
+        {% csrf_token %}
+        <hr>
+        <label id="icon" for="address"><i class="fas fas fa-map"></i></label>
+          <input type="text" name="address" id="address" placeholder="Direccion Fisica" />
+        <label id="icon" for="mail"><i class="fas fa-envelope"></i></label>
+          <input type="text" name="mail" id="mail" placeholder="Correo Electronico" />
+        <label id="icon" for="Name"><i class="fas fa-user"></i></label>
+          <input type="text" name="Name" id="Name" placeholder="Nombre" />
+        <label id="icon" for="NIT"><i class="fas fa-hashtag"></i></label>
+          <input type="text" name="NIT" id="NIT" placeholder="NIT" />
+        <div class="btn-block">
+          <p>¿Ya tienes una cuenta? <a href="{%url 'login'%}">Ingresa aqui!</a></p>
+          <button type="submit"  class="button" >Registrarse</button>
+        </div>
+      </form>
+      <h3>{{result.msg}}</h3>
+    </div>
+  </body>
+{%endblock%}

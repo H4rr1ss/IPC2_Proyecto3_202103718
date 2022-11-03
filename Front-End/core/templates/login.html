@@ -1,0 +1,33 @@
+{%extends 'base.html'%}
+{%load static%}
+{%block fonts%}
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+{%endblock%}
+{%block title%}Ingresar{%endblock%}
+{%block body%}
+<body class="body-login">
+    <header id="header" class="header">
+        <section class="menu-bar">
+            <ul class="menu">
+                <a href="{%url 'home'%}"><li>Home</li></a>
+            </ul>
+        </section>
+    </header>
+    <h5 class="result" style="position: relative; top:17%; color: white; height: 15px;z-index: 100;">{{result.msg}}</h5>
+    <div class="main-block">
+        <form class="form1" method="POST" action={{result.ruta}}>
+            {% csrf_token %}
+            <h3>Ingresar</h3>
+            <label for="username" class="label1">Username</label>
+                <input type="text" name="name" placeholder="Nombre" id="username" class="input1">
+            <label for="password" class="label1">Password</label>
+                <input type="password" placeholder="Contraseña" id="password" class="input1" name="pass">
+            <a href=""><button class="button1">Log In</button></a>
+            <br>
+            <p>¿Aun no tienes una cuenta? <a href="{%url 'registrar'%}">Registrate aqui!</a></p>
+        </form>
+    </div>
+</body>
+{%endblock%}

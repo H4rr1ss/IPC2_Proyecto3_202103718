@@ -1,0 +1,47 @@
+{%extends 'base.html'%}
+{%load static%}
+{%block fonts%}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Silkscreen&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+{%endblock%}
+{%block title%}Tecnologias Chapinas{%endblock%}
+{%block body%}
+<body class="body-principal">
+  <main id="main-doc">
+    <section class="main-section" id="select_xml">
+        <header>Mensaje de configuración</header>
+        <br>
+        <p>En esta seccion podras cargar tu archivo xml con el cual puedes definir los equipos virtuales 
+          disponibles actualmente ademas de sus distintos componentes y precios que se cobraran por el uso de
+          cada uno de esto equipos en un tiempo determinado, ademas de poder cargar distintos usuarios que podran realizar 
+          estos procesos. <br> Para que tu archivo se cargue correctamente sera necesario que tenga el siguiente formato:
+        </p>
+        <br>
+        <img src="../static/IMG/formato.jpg" alt="XML" id="img-xml">
+        <br>
+      <form action="/lector/" method="post" enctype="multipart/form-data">
+          {% csrf_token%}
+        <label class="btn btn-danger" style ="cursor: pointer;" for="file">Seleccionar</label>
+          <input type="file" style="display: none;" name="file" id="file"/>
+        <input type="submit" value="Guardar" class="btn btn-danger">
+      </form>
+      <h3>Se ha creado {{recurso}} recurso/s , {{categoria}} categoria/s y {{cliente}} clientes!</h3>
+    </section>
+    <nav id="navbar">
+        <header>
+          <img src="../static/IMG/Logo.png" alt="Logo" class="logo1">
+          <br>
+          <a href="{%url 'main'%}" class="nav-link">Pagina Principal</a>
+          <hr>
+          <a href="{%url 'consumir'%}" class="nav-link">Consumo</a>
+          <hr>
+          <a class="nav-link">Logout</a>
+        </header>
+      </nav>
+  </main>
+</body>
+{%endblock%}

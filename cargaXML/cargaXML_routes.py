@@ -5,6 +5,7 @@ import re
 
 cargaXML = Blueprint('cargaXML', __name__)
 
+
 def dateCongiER(date):
     try:
         fechaER = re.findall("\d{2}/\d{2}/\d{4}", date)
@@ -12,6 +13,7 @@ def dateCongiER(date):
         return stringFecha
     except:
         print('ocurrio un error')
+
 
 @cargaXML.route('/cargaXML/configuracion', methods=['POST'])
 def rutaConfig():
@@ -78,6 +80,7 @@ def dateConsumoER(date):
         return stringFecha
     except:
         print('ocurrio un error')
+
 
 @cargaXML.route('/cargaXML/consumo', methods=['POST'])
 def xmlConsumo():
